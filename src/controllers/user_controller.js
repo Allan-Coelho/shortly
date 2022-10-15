@@ -1,5 +1,5 @@
 import { STATUS_CODE } from "../enums/status_code.js";
-import { database } from "../database/.js";
+import { database } from "../database/database.js";
 
 function signup(request, response) {
   try {

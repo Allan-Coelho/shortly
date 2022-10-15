@@ -1,4 +1,7 @@
 import Joi from "joi";
+import { joiPasswordExtendCore } from "joi-password";
+
+const JoiPassword = Joi.extend(joiPasswordExtendCore);
 
 const schemas = {
   user_schema: Joi.object({
