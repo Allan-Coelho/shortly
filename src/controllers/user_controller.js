@@ -1,11 +1,21 @@
 import { STATUS_CODE } from "../enums/status_code.js";
-import { database } from "../database/database.js";
+import { insertUser } from "../repositories/userRepository.js";
 
-function signup(request, response) {
+async function signup(request, response) {
   try {
+    const { name, email, password } = response.locals.safeBody;
+    const query = await insertUser(name, email, password);
+
+    if (query.rowCount === 0) {
+      console.log("failed to insert user");
+      response.sendStatus(STATUS_CODE.SERVER_ERROR);
+      return;
+    }
+
+    response.sendStatus(STATUS_CODE.CREATED);
   } catch (error) {
     console.log(error);
-    response.sendStatus();
+    response.sendStatus(STATUS_CODE.SERVER_ERROR);
   }
 }
 
