@@ -2,7 +2,15 @@ import { stripHtml } from "string-strip-html";
 import { STATUS_CODE } from "../enums/status_code";
 
 const requestObjectsToSanitize = ["headers", "body", "query", "params"];
-const propertiesToSanitize = ["name", "email", "password", "confirmPassword"];
+const propertiesToSanitize = [
+  "name",
+  "email",
+  "password",
+  "confirmPassword",
+  "id",
+  "shortUrl",
+  "url",
+];
 
 function html_sanitizer(request, response, next) {
   try {

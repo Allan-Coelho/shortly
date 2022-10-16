@@ -1,10 +1,11 @@
-import { STATUS_CODE } from "./status_code";
+import { STATUS_CODE } from "./status_code.js";
 
 const schemas_configuration = Object.freeze([
   {
     path: "",
     method: "",
     schema_name: "",
+    request_data: "body | params | headers",
     uniques: [
       {
         property: "",
@@ -19,6 +20,7 @@ const schemas_configuration = Object.freeze([
     path: "/signup",
     method: "POST",
     schema_name: "user_schema",
+    request_data: "body",
     uniques: [
       {
         property: "email",
@@ -33,6 +35,7 @@ const schemas_configuration = Object.freeze([
     path: "/signin",
     method: "POST",
     schema_name: "login_schema",
+    request_data: "body",
     uniques: [
       {
         property: "",
@@ -40,6 +43,21 @@ const schemas_configuration = Object.freeze([
         must_not_exist: false,
         must_not_exist_status_code: STATUS_CODE.UNAUTHORIZED,
         error_details: false,
+      },
+    ],
+  },
+  {
+    path: "/urls/:id",
+    method: "GET",
+    schema_name: "id_schema",
+    request_data: "params",
+    uniques: [
+      {
+        property: "id",
+        table: "urls",
+        must_not_exist: false,
+        must_not_exist_status_code: STATUS_CODE.NOT_FOUND,
+        error_details: true,
       },
     ],
   },

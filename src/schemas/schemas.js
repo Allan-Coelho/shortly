@@ -17,6 +17,10 @@ const schemas = {
       .required(),
     confirmPassword: Joi.ref("password"),
   }),
+
+  id_schema: Joi.object({
+    id: Joi.number().integer().required(),
+  }),
 };
 
 export { schemas };

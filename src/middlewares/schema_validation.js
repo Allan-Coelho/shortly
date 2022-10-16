@@ -5,16 +5,17 @@ import { schemas } from "../schemas/schemas.js";
 
 async function schema_validation(request, response, next) {
   try {
-    const path = request.path;
-    const method = request.method;
-    const body = response.locals.body;
-    const FIRST_ERROR = 0;
     const schema_config = schemas_configuration.find((schema) => {
       if (schema.path === path && schema.method === method) {
         return true;
       }
     });
-    const { value, error } = schemas[schema_config.schema_name].validate(body);
+    const path = request.path;
+    const method = request.method;
+    const data = response.locals[schema_config.request_data];
+    const FIRST_ERROR = 0;
+
+    const { value, error } = schemas[schema_config.schema_name].validate(data);
 
     if (error !== undefined) {
       console.log("schema error");
