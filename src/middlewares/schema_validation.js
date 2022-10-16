@@ -1,4 +1,4 @@
-import { database } from "pg/lib/defaults.js";
+import { database } from "../database/database.js";
 import { schemas_configuration } from "../enums/schema_configuration.js";
 import { STATUS_CODE } from "../enums/status_code.js";
 import { schemas } from "../schemas/schemas.js";
@@ -9,13 +9,11 @@ async function schema_validation(request, response, next) {
     const method = request.method;
     const body = response.locals.body;
     const FIRST_ERROR = 0;
-    const NOT_EXIST = 0;
     const schema_config = schemas_configuration.find((schema) => {
       if (schema.path === path && schema.method === method) {
         return true;
       }
     });
-
     const { value, error } = schemas[schema_config.schema_name].validate(body);
 
     if (error !== undefined) {
