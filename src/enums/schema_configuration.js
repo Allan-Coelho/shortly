@@ -61,6 +61,12 @@ const schemas_configuration = Object.freeze([
       },
     ],
   },
+  {
+    path: "/urls/shorten",
+    method: "POST",
+    schema_name: "url_schema",
+    request_data: "body",
+  },
 ]);
 
 export { schemas_configuration };

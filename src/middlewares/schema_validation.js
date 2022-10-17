@@ -66,7 +66,7 @@ async function schema_validation(request, response, next) {
       }
     }
 
-    response.locals.safe_body = value;
+    response.locals.safe_data = value;
     next();
   } catch (error) {
     console.log(error);

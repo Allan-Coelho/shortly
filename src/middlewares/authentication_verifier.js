@@ -1,3 +1,4 @@
+import { STATUS_CODE } from "../enums/status_code";
 import { get_session } from "../repositories/authentication_repository";
 
 async function authentication_verifier(request, response, next) {
@@ -12,16 +13,20 @@ async function authentication_verifier(request, response, next) {
     const user_session_not_exist = user_session.rowCount === 0 ? false : true;
 
     if (token_is_missing) {
-      response.status(401).send("authorization token is missing");
+      response
+        .status(STATUS_CODE.UNAUTHORIZED)
+        .send("authorization token is missing");
       return;
     }
 
     if (user_session_not_exist) {
-      response.status(401).send("invalid authorization token");
+      response
+        .status(STATUS_CODE.UNAUTHORIZED)
+        .send("invalid authorization token");
       return;
     }
 
-    response.locals.safe_body = user_session.user_id;
+    response.locals.user_id = user_session.user_id;
     next();
   } catch (error) {
     console.log(error.message);

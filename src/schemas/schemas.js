@@ -21,6 +21,10 @@ const schemas = {
   id_schema: Joi.object({
     id: Joi.number().integer().required(),
   }),
+
+  url_schema: Joi.object({
+    url: Joi.string().uri().required(),
+  }),
 };
 
 export { schemas };

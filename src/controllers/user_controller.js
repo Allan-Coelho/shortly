@@ -9,7 +9,7 @@ import { insert_session } from "../repositories/authentication_repository.js";
 
 async function signup(request, response) {
   try {
-    const { name, email, password } = response.locals.safe_body;
+    const { name, email, password } = response.locals.safe_data;
     const query = await insert_user(name, email, password);
 
     if (query.rowCount === 0) {
