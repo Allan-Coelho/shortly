@@ -10,7 +10,7 @@ async function authentication_verifier(request, response, next) {
         ? true
         : false;
     const user_session = await get_session(token);
-    const user_session_not_exist = user_session.rowCount === 0 ? false : true;
+    const user_session_not_exist = user_session.rowCount === 0 ? true : false;
 
     if (token_is_missing) {
       response
