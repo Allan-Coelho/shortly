@@ -11,7 +11,7 @@ function select_url_by_id(id) {
 
 function insert_shorten_url(url, user_id, short_url) {
   return database.query(
-    `INSERT INTO ${TABLE} (url, shortUrl, userId) VALUE ($1, $2, $3)`,
+    `INSERT INTO ${TABLE} (url, shortUrl, userId) VALUES ($1, $2, $3)`,
     [url, short_url, user_id]
   );
 }
