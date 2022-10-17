@@ -34,12 +34,12 @@ const schemas_configuration = Object.freeze([
   {
     path: "/signin",
     method: "POST",
-    schema_name: "login_schema",
+    schema_name: "signin_schema",
     request_data: "body",
     uniques: [
       {
-        property: "",
-        table: "",
+        property: "email",
+        table: "users",
         must_not_exist: false,
         must_not_exist_status_code: STATUS_CODE.UNAUTHORIZED,
         error_details: false,

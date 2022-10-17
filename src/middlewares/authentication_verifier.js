@@ -1,5 +1,5 @@
-import { STATUS_CODE } from "../enums/status_code";
-import { get_session } from "../repositories/authentication_repository";
+import { STATUS_CODE } from "../enums/status_code.js";
+import { get_session } from "../repositories/authentication_repository.js";
 
 async function authentication_verifier(request, response, next) {
   try {

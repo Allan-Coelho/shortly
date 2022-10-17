@@ -4,6 +4,7 @@ import {
   get_user_by_email,
   insert_user,
 } from "../repositories/user_repository.js";
+import { v4 as uuid } from "uuid";
 
 import { insert_session } from "../repositories/authentication_repository.js";
 
@@ -29,12 +30,12 @@ async function signup(request, response) {
 
 async function signin(request, response) {
   try {
-    const { email, password } = response.locals.safe_body;
+    const { email, password } = response.locals.safe_data;
     const user = await get_user_by_email(email);
 
-    if (bcrypt.compareSync(password, user.password)) {
+    if (bcrypt.compareSync(password, user.rows[0].password)) {
       const token = uuid();
-      const create_session = await insert_session(user.id, token);
+      const create_session = await insert_session(user.rows[0].id, token);
 
       if (create_session.rowCount === 0) {
         console.log("failed to signin user");

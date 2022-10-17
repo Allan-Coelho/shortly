@@ -18,6 +18,18 @@ const schemas = {
     confirmPassword: Joi.ref("password"),
   }),
 
+  signin_schema: Joi.object({
+    email: Joi.string().min(1).email().required(),
+    password: JoiPassword.string()
+      .min(8)
+      .minOfSpecialCharacters(1)
+      .minOfLowercase(1)
+      .minOfUppercase(1)
+      .minOfNumeric(1)
+      .noWhiteSpaces()
+      .required(),
+  }),
+
   id_schema: Joi.object({
     id: Joi.number().integer().required(),
   }),

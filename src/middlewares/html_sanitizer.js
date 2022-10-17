@@ -1,5 +1,5 @@
 import { stripHtml } from "string-strip-html";
-import { STATUS_CODE } from "../enums/status_code";
+import { STATUS_CODE } from "../enums/status_code.js";
 
 const requestObjectsToSanitize = ["headers", "body", "query", "params"];
 const propertiesToSanitize = [

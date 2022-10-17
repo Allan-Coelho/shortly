@@ -5,7 +5,7 @@ import {
   select_url_by_short_url,
 } from "../repositories/urls_repository.js";
 import { nanoid } from "nanoid";
-import { insert_view } from "../repositories/views.js";
+import { insert_view } from "../repositories/views_repository.js";
 
 async function get_url_by_id(request, response) {
   try {

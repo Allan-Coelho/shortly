@@ -5,16 +5,15 @@ import { schemas } from "../schemas/schemas.js";
 
 async function schema_validation(request, response, next) {
   try {
+    const path = request.path;
+    const method = request.method;
     const schema_config = schemas_configuration.find((schema) => {
       if (schema.path === path && schema.method === method) {
         return true;
       }
     });
-    const path = request.path;
-    const method = request.method;
     const data = response.locals[schema_config.request_data];
     const FIRST_ERROR = 0;
-
     const { value, error } = schemas[schema_config.schema_name].validate(data);
 
     if (error !== undefined) {
@@ -33,39 +32,35 @@ async function schema_validation(request, response, next) {
           [value[config.property]]
         );
         const NOT_EXIST = query.rowCount === 0 ? true : false;
-
         if (config.must_not_exist) {
           if (!NOT_EXIST) {
             if (config.error_details) {
               response
                 .status(config.must_not_exist_status_code)
                 .send(`error at ${config.property}`);
-              next();
               return;
             }
 
             response.sendStatus(config.must_not_exist_status_code);
-            next();
             return;
           }
-        }
+        } else {
+          if (NOT_EXIST) {
+            if (config.error_details) {
+              response
+                .status(config.must_not_exist_status_code)
+                .send(`error at ${config.property}`);
+              return;
+            }
 
-        if (NOT_EXIST) {
-          if (config.error_details) {
-            response
-              .status(config.must_not_exist_status_code)
-              .send(`error at ${config.property}`);
-            next();
+            response.sendStatus(config.must_not_exist_status_code);
             return;
           }
-
-          response.sendStatus(config.must_not_exist_status_code);
-          next();
-          return;
         }
       }
     }
 
+    console.log(value);
     response.locals.safe_data = value;
     next();
   } catch (error) {

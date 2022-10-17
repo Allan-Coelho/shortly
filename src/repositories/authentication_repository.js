@@ -2,7 +2,7 @@ import { database } from "../database/database.js";
 
 function insert_session(user_id, token) {
   return database.query(
-    "INSERT INTO sessions (user_id, token) VALUES ($1, $2)",
+    'INSERT INTO sessions ("userId", token) VALUES ($1, $2)',
     [user_id, token]
   );
 }
