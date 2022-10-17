@@ -3,6 +3,7 @@ import {
   select_url_by_id,
   insert_shorten_url,
   select_url_by_short_url,
+  remove_url_by_id,
 } from "../repositories/urls_repository.js";
 import { nanoid } from "nanoid";
 import { insert_view } from "../repositories/views_repository.js";
@@ -11,8 +12,13 @@ async function get_url_by_id(request, response) {
   try {
     const { id } = response.locals.safe_data;
     const queryData = await select_url_by_id(id);
+    const urlData = queryData.rows[0];
 
-    response.send(queryData.rows[0]);
+    response.send({
+      id: urlData.id,
+      shortUrl: urlData.shortUrl,
+      url: urlData.url,
+    });
   } catch (error) {
     console.log(error.message);
     response.sendStatus(STATUS_CODE.SERVER_ERROR);
@@ -47,6 +53,7 @@ async function redirect_by_short_url(request, response) {
   try {
     const { shortUrl } = response.locals.safe_data;
     const query = await select_url_by_short_url(shortUrl);
+    console.log(query);
     const query_insert_view = await insert_view(
       query.rows[0].id,
       query.rows[0].userId
@@ -58,7 +65,7 @@ async function redirect_by_short_url(request, response) {
       return;
     }
 
-    response.redirect(query.rows[0].shortUrl);
+    response.redirect(query.rows[0].url);
   } catch (error) {
     console.log(error.message);
     response.sendStatus(STATUS_CODE.SERVER_ERROR);
@@ -69,7 +76,7 @@ async function redirect_by_short_url(request, response) {
 function delete_url_by_id(request, response) {
   try {
     const { id } = response.locals.safe_data;
-    const query = delete_url_by_id(id);
+    const query = remove_url_by_id(id);
 
     if (query.rowCount === 0) {
       console.log("failed to delete url");

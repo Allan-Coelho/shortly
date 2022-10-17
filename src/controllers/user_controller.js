@@ -57,5 +57,13 @@ async function signin(request, response) {
     return;
   }
 }
+function get_me(request, response) {
+  try {
+  } catch (error) {
+    console.log(error.message);
+    response.sendStatus(STATUS_CODE.SERVER_ERROR);
+    return;
+  }
+}
 
-export { signup, signin };
+export { signup, signin, get_me };

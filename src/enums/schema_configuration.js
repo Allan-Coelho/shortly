@@ -57,7 +57,7 @@ const schemas_configuration = Object.freeze([
         table: "urls",
         must_not_exist: false,
         must_not_exist_status_code: STATUS_CODE.NOT_FOUND,
-        error_details: true,
+        error_details: false,
       },
     ],
   },
@@ -66,6 +66,36 @@ const schemas_configuration = Object.freeze([
     method: "POST",
     schema_name: "url_schema",
     request_data: "body",
+  },
+  {
+    path: "/urls/open/:shortUrl",
+    method: "GET",
+    schema_name: "short_url_schema",
+    request_data: "params",
+    uniques: [
+      {
+        property: "shortUrl",
+        table: "urls",
+        must_not_exist: false,
+        must_not_exist_status_code: STATUS_CODE.NOT_FOUND,
+        error_details: false,
+      },
+    ],
+  },
+  {
+    path: "/urls/:id",
+    method: "DELETE",
+    schema_name: "id_schema",
+    request_data: "params",
+    uniques: [
+      {
+        property: "id",
+        table: "urls",
+        must_not_exist: false,
+        must_not_exist_status_code: STATUS_CODE.NOT_FOUND,
+        error_details: false,
+      },
+    ],
   },
 ]);
 

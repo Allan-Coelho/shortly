@@ -16,7 +16,7 @@ const schemas = {
       .noWhiteSpaces()
       .required(),
     confirmPassword: Joi.ref("password"),
-  }),
+  }).unknown(false),
 
   signin_schema: Joi.object({
     email: Joi.string().min(1).email().required(),
@@ -28,15 +28,22 @@ const schemas = {
       .minOfNumeric(1)
       .noWhiteSpaces()
       .required(),
-  }),
+  }).unknown(false),
 
   id_schema: Joi.object({
     id: Joi.number().integer().required(),
-  }),
+  }).unknown(false),
 
   url_schema: Joi.object({
     url: Joi.string().uri().required(),
-  }),
+  })
+    .unknown(false)
+    .required(),
+  short_url_schema: Joi.object({
+    shortUrl: Joi.string().required(),
+  })
+    .unknown(false)
+    .required(),
 };
 
 export { schemas };

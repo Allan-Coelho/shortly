@@ -26,7 +26,7 @@ async function authentication_verifier(request, response, next) {
       return;
     }
 
-    response.locals.user_id = user_session.user_id;
+    response.locals.user_id = user_session.rows[0].userId;
     next();
   } catch (error) {
     console.log(error.message);

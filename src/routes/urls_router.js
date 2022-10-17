@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.get("/urls/:id", html_sanitizer, schema_validation, get_url_by_id);
 router.post(
-  "/urls/:shorten",
+  "/urls/shorten",
   html_sanitizer,
   schema_validation,
   authentication_verifier,

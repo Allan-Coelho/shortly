@@ -5,7 +5,8 @@ import { schemas } from "../schemas/schemas.js";
 
 async function schema_validation(request, response, next) {
   try {
-    const path = request.path;
+    const route = request.route;
+    const path = route.path;
     const method = request.method;
     const schema_config = schemas_configuration.find((schema) => {
       if (schema.path === path && schema.method === method) {
@@ -28,7 +29,7 @@ async function schema_validation(request, response, next) {
       for (let i = 0, len = schema_config.uniques.length; i < len; i++) {
         const config = schema_config.uniques[i];
         const query = await database.query(
-          `SELECT ${config.property} FROM ${config.table} WHERE ${config.property}=$1`,
+          `SELECT "${config.property}" FROM ${config.table} WHERE "${config.property}"=$1`,
           [value[config.property]]
         );
         const NOT_EXIST = query.rowCount === 0 ? true : false;
@@ -60,7 +61,6 @@ async function schema_validation(request, response, next) {
       }
     }
 
-    console.log(value);
     response.locals.safe_data = value;
     next();
   } catch (error) {
